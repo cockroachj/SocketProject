@@ -38,8 +38,8 @@ void Text(String message1, int row)
         delay(100);
     }
 }
-char ssid[] = "TP-LINK_asdf";
-char password[] = "19810223";
+char ssid[] = "netis_2.4G";
+char password[] = "19871019";
 WiFiServer wifiServer(4431);
 
 WiFiUDP udp;
@@ -116,7 +116,7 @@ void setup()
     Serial.println(ip);
     Text(String(ip[0]) + "." + ip[1] + "." + ip[2] + "." + ip[3], 1);
     timeClient.begin();
-    timeClient.setTimeOffset(28800);
+    // timeClient.setTimeOffset(28800);
     wifiServer.begin();
     LcdTime();
 }
@@ -126,41 +126,37 @@ void loop()
     String bufString;
     if (client)
     {
-        Serial.println("[Client connected]");
         socketCount ++;
         while (client.connected())
         {
-            
-            if (client.available())
+            while (client.available()>0)
             {
+                Serial.println("[Client connected]");
                 Serial.println(client.available()+" : available");
-                String input = client.readStringUntil('/n');
+                char input = client.read();
                 // sockRead(input);
-                Serial.println(input.length());
-                String myInput = input;
-                Serial.println(myInput);
-                if (myInput.equals("Open"))
+                bufString += input;
+                Serial.println(bufString);
+                if (bufString.equals("Open"))
                 {
                     Serial.println("in O");
                     myServo.write(90);
-                    Serial.println(myInput);
-                    bufString = myInput;
+                    Serial.println(bufString);
                     Serial.println(bufString + " sockRead");
                     LcdTime();
-                    Text(input,0);
-                }else if (myInput.equals("Close"))
+                    Text(bufString,0);
+                }else if (bufString.equals("Close"))
                 {
                     myServo.write(0);
                     Serial.println("in C");
-                    Serial.println(myInput);
-                    bufString = myInput;
+                    Serial.println(bufString);
                     LcdTime();
-                    Text(input,0);
+                    Text(bufString,0);
                     // delay(3000);
                 }else
                 {
                     Serial.println("in default");
-                    Serial.println(myInput);
+                    Serial.println(bufString);
                     LcdTime();
                 }
                 
@@ -205,5 +201,7 @@ void loop()
         Serial.println("Client disconnected ! ");
         Serial.println(socketCount);
         Serial.println(count);
+    }else{
+        delay(1);
     }
 }
