@@ -1,0 +1,45 @@
+{
+    "configurations": [
+        {
+            "name": "ESP32",
+            "includePath": [
+                "D:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino",
+                "D:/Program Files (x86)/Arduino/tools/**",
+                "D:/Program Files (x86)/Arduino/hardware/arduino/avr/**",
+                "D:/Program Files (x86)/Arduino/hardware/tools/**",
+                "D:/Program Files (x86)/Arduino/libraries/**",
+                "C:/Users/${env:Username}/Documents/Arduino/libraries/**",
+                "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\**",
+                "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\**",
+                "D:/Program Files (x86)/Arduino/libraries/WiFi/src",
+                "D:\\Program Files (x86)\\Arduino\\libraries\\**",
+                "C:\\Users\\user\\Documents\\Arduino\\libraries\\**"
+            ],
+            "defines": [
+                "USBCON",
+                "ARDUINO=10813"
+            ],
+            "forcedInclude": [
+                "D:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino/Arduino.h"
+            ],
+            "intelliSenseMode": "clang-x64",
+            "compilerPath": "D:/Program Files (x86)/Arduino/hardware/tools/avr/bin/avr-gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        },
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:\\Users\\user\\Documents\\Arduino\\libraries\\**",
+                "D:\\Program Files (x86)\\Arduino\\libraries\\**",
+                "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\**",
+                "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\**"
+            ],
+            "forcedInclude": [],
+            "defines": [
+                "USBCON"
+            ]
+        }
+    ],
+    "version": 4
+}
