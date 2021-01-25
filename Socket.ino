@@ -129,6 +129,7 @@ void loop()
         socketCount ++;
         while (client.connected())
         {
+            Serial.println("client.connected()");
             while (client.available()>0)
             {
                 Serial.println("[Client connected]");
