@@ -116,7 +116,7 @@ void setup()
     Serial.println(ip);
     Text(String(ip[0]) + "." + ip[1] + "." + ip[2] + "." + ip[3], 1);
     timeClient.begin();
-    // timeClient.setTimeOffset(28800);
+    timeClient.setTimeOffset(28800);
     wifiServer.begin();
     LcdTime();
 }
@@ -126,83 +126,70 @@ void loop()
     String bufString;
     if (client)
     {
-        socketCount ++;
+        socketCount++;
         while (client.connected())
         {
             Serial.println("client.connected()");
-            while (client.available()>0)
+            while (client.available() > 0)
             {
-                Serial.println("[Client connected]");
-                Serial.println(client.available()+" : available");
                 char input = client.read();
-                // sockRead(input);
                 bufString += input;
-                Serial.println(bufString);
-                if (bufString.equals("Open"))
-                {
-                    Serial.println("in O");
-                    myServo.write(90);
-                    Serial.println(bufString);
-                    Serial.println(bufString + " sockRead");
-                    LcdTime();
-                    Text(bufString,0);
-                }else if (bufString.equals("Close"))
-                {
-                    myServo.write(0);
-                    Serial.println("in C");
-                    Serial.println(bufString);
-                    LcdTime();
-                    Text(bufString,0);
-                    // delay(3000);
-                }else
-                {
-                    Serial.println("in default");
-                    Serial.println(bufString);
-                    LcdTime();
-                }
-                
-                
-                
-                // switch (input.charAt(0))
-                // {
-                //     case 'O':
-                //     Serial.println("in O");
-                //     myServo.write(90);
-                //     Serial.println(input);
-                //     bufString = input;
-                //     Serial.println(bufString + " sockRead");
-                //     LcdTime();
-                //     Text(input,0);
-                //     // delay(3000);
-                //     break;
-                // case 'C':
-                //     myServo.write(0);
-                //     Serial.println("in C");
-                //     Serial.println(input);
-                //     bufString = input;
-                //     LcdTime();
-                //     Text(input,0);
-                //     // delay(3000);
-                //     break;
-                // default:
-                //     Serial.println("in default");
-                //     Serial.println(input);
-                //     LcdTime();
-                //     break;
-                // }
-                // Serial.println(input+"2");
-                // Serial.println(bufString+"in if");
-                // client.println(bufString);
+            }
+            Serial.println(bufString);
+            // if (bufString.equals("Open"))
+            // {
+            //     myServo.write(90);
+            //     Serial.println("in O");
+            //     Serial.println(bufString);
+            //     LcdTime();
+            //     Text(bufString, 0);
+            // }
+            // else if (bufString.equals("Close"))
+            // {
+            //     myServo.write(0);
+            //     Serial.println("in C");
+            //     Serial.println(bufString);
+            //     LcdTime();
+            //     Text(bufString, 0);
+            //     // delay(3000);
+            // }
+            // else
+            // {
+            //     Serial.println("in default");
+            //     Serial.println(bufString);
+            //     LcdTime();
+            // }
+            switch (bufString.charAt(0))
+            {
+            case 'O':
+                Serial.println("in O");
+                myServo.write(90);
+                LcdTime();
+                count++;
+                // delay(3000);
+                break;
+            case 'C':
+                Serial.println("in C");
+                myServo.write(0);
+                LcdTime();
+                count++;
+                // delay(3000);
+                break;
+            default:
+                Serial.println("in default");
+                LcdTime();
                 break;
             }
+            break;
         }
         // Serial.println("bufString clear : " + bufString);
         client.stop();
-        LcdTime();
         Serial.println("Client disconnected ! ");
         Serial.println(socketCount);
         Serial.println(count);
-    }else{
+    }
+    else
+    {
         delay(1);
     }
 }
