@@ -40,7 +40,7 @@ void Text(String message1, int row)
 }
 char ssid[] = "netis_2.4G";
 char password[] = "19871019";
-WiFiServer wifiServer(4431);
+WiFiServer wifiServer(14431);
 
 WiFiUDP udp;
 NTPClient timeClient(udp);
@@ -123,6 +123,7 @@ void setup()
 void loop()
 {
     WiFiClient client = wifiServer.available();
+    client.setTimeout(3);
     String bufString;
     if (client)
     {
@@ -166,6 +167,7 @@ void loop()
                 myServo.write(90);
                 LcdTime();
                 count++;
+                client.write("Open");
                 // delay(3000);
                 break;
             case 'C':
@@ -182,7 +184,6 @@ void loop()
             }
             break;
         }
-        // Serial.println("bufString clear : " + bufString);
         client.stop();
         Serial.println("Client disconnected ! ");
         Serial.println(socketCount);
