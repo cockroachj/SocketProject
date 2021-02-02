@@ -179,6 +179,7 @@ void loop()
                 break;
             default:
                 Serial.println("in default");
+                client.write("Socket Error...");
                 LcdTime();
                 break;
             }
