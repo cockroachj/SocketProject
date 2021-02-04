@@ -3,7 +3,7 @@
 #include <WiFi.h>
 #include <WiFiUdp.h>
 #include <NTPClient.h>
-
+#include <EasyDDNS.h>
 Servo myServo;       //伺服馬達
 int servoAngle = 0;  //伺服馬達起始角度
 int lcdColumns = 16; //LCD行數
@@ -118,6 +118,12 @@ void setup()
     timeClient.begin();
     timeClient.setTimeOffset(28800);
     wifiServer.begin();
+    EasyDDNS.service("noip");
+    EasyDDNS.client("cackroachj.ddns.net","cackroachj@gmail.com","19871019");
+    EasyDDNS.onUpdate([&](const char* oldIP,const char* newIP){
+        Serial.print("EasyDDNS - IP Change Detected : ");
+        Serial.println(newIP);
+    });
     LcdTime();
 }
 void loop()
@@ -125,6 +131,7 @@ void loop()
     WiFiClient client = wifiServer.available();
     client.setTimeout(3);
     String bufString;
+    EasyDDNS.update(10000);
     if (client)
     {
         socketCount++;
