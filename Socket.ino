@@ -136,6 +136,8 @@ void loop()
                 char input = client.read();
                 bufString += input;
             }
+                
+            
             Serial.println(bufString);
             // if (bufString.equals("Open"))
             // {
@@ -168,6 +170,7 @@ void loop()
                 LcdTime();
                 count++;
                 client.write("Open");
+                client.flush();
                 // delay(3000);
                 break;
             case 'C':
@@ -175,11 +178,14 @@ void loop()
                 myServo.write(0);
                 LcdTime();
                 count++;
+                client.write("Close");
+                client.flush();
                 // delay(3000);
                 break;
             default:
                 Serial.println("in default");
                 client.write("Socket Error...");
+                client.flush();
                 LcdTime();
                 break;
             }

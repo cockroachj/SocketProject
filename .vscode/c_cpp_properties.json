@@ -6,7 +6,8 @@
                 "${workspaceFolder}/**",
                 "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\**",
                 "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\**",
-                "C:\\Users\\user\\Documents\\Arduino\\libraries\\**"
+                "C:\\Users\\user\\Documents\\Arduino\\libraries\\**",
+                "D:\\Program Files (x86)\\Arduino\\libraries\\**"
             ],
             "defines": [
                 "USBCON",
