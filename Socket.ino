@@ -4,6 +4,7 @@
 #include <WiFiUdp.h>
 #include <NTPClient.h>
 #include <EasyDDNS.h>
+#include <HTTPClient.h>
 Servo myServo;       //伺服馬達
 int servoAngle = 0;  //伺服馬達起始角度
 int lcdColumns = 16; //LCD行數
@@ -48,7 +49,7 @@ String formattedDate;
 String dayStamp;
 String timeStamp;
 char command;
-String readString;
+String readString, new_ip;
 
 char *string2char(String command)
 {
@@ -57,6 +58,27 @@ char *string2char(String command)
         char *p = const_cast<char *>(command.c_str());
         return p;
     }
+}
+
+void LocalIP()
+{
+    HTTPClient http;
+    http.begin("http://ipv4bot.whatismyipaddress.com/");
+    int httpCode = http.GET();
+    if (httpCode > 0)
+    {
+        if (httpCode == HTTP_CODE_OK)
+        {
+            new_ip = http.getString();
+            Serial.println(new_ip);
+        }
+    }
+    else
+    {
+        http.end();
+        return;
+    }
+    http.end();
 }
 
 void LcdTime()
@@ -115,12 +137,13 @@ void setup()
     IPAddress ip = WiFi.localIP();
     Serial.println(ip);
     Text(String(ip[0]) + "." + ip[1] + "." + ip[2] + "." + ip[3], 1);
+    LocalIP();
     timeClient.begin();
     timeClient.setTimeOffset(28800);
     wifiServer.begin();
     EasyDDNS.service("noip");
-    EasyDDNS.client("cackroachj.ddns.net","cackroachj@gmail.com","19871019");
-    EasyDDNS.onUpdate([&](const char* oldIP,const char* newIP){
+    EasyDDNS.client("cackroachj.ddns.net", "cackroachj", "19871019");
+    EasyDDNS.onUpdate([&](const char *oldIP, const char *newIP) {
         Serial.print("EasyDDNS - IP Change Detected : ");
         Serial.println(newIP);
     });
@@ -143,8 +166,7 @@ void loop()
                 char input = client.read();
                 bufString += input;
             }
-                
-            
+
             Serial.println(bufString);
             // if (bufString.equals("Open"))
             // {
