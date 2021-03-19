@@ -127,6 +127,7 @@ void LedBlink(void *pvParameters)
             while (WiFi.status() != WL_CONNECTED)
             {
                 Serial.print(".");
+                delay(500);
             }
             LocalIP();
             wifiServer.begin();
@@ -152,6 +153,7 @@ void OpenSend(void *pvParameters)
     {
         if (openFlag == true)
         {
+            LcdTime();
             String message = "門被開啟" + dayStamp + "," + timeStamp;
             if (client.connect(host, 443))
             {
@@ -217,6 +219,7 @@ void setup()
     while (WiFi.status() != WL_CONNECTED)
     {
         Serial.print(".");
+        delay(500);
     }
     Serial.println("");
     Serial.println("WiFi connected.");
